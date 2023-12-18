@@ -84,16 +84,66 @@ class Solution {
 
     /*
      *递归
-     * 
-     */
+     */ 
+
      public ListNode swapPairs(ListNode head) {
-        if(head==null||head.next==null) return head;
+        if(head==null||head.next==null)//结束条件
+        {
+            return head;
+        }
         ListNode node1=head;
         ListNode node2=head.next;
-        node1.next=swapPairs(node2.next);
+        ListNode nex=node2.next;
+        node1.next=swapPairs(nex);
         node2.next=node1;
         return node2;
     }
+
+
+    /*
+     *迭代
+
+     public ListNode swapPairs(ListNode head) {
+        ListNode  dummyHead= new ListNode(0);
+        dummyHead.next=head;
+        ListNode pre=dummyHead;
+        ListNode end=dummyHead;
+        while(end.next!=null)
+        {
+            for(int i=0;i<2&&end!=null;i++)
+            {
+                end=end.next;
+            }
+            if(end==null) break;//奇数个剩余1个不翻转
+            ListNode start=pre.next;
+            ListNode nex=end.next;
+            end.next=null;//把start-end这段单独拿出来 null标志这段的结束
+            pre.next=swap(start);
+            start.next=nex;//翻转后的start为最后一个 start的next为nex
+
+            //更新pre和end end等待下一轮向后遍历2个
+            pre=start;
+            end=pre;
+        }
+        return dummyHead.next;
+    }
+    private ListNode swap(ListNode head)
+    {
+        ListNode pre=null;
+        ListNode cur=head;
+        while(cur!=null)
+        {
+            ListNode nex=cur.next;
+            cur.next=pre;//改变指针方向
+            //更新pre和cur
+            pre=cur;
+            cur=nex;
+        }
+        return pre;
+    }
+
+    */
+
 
 }
 // @lc code=end
