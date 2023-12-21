@@ -17,24 +17,17 @@
  */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        //双指针法
-        //head 是头结点 有val值
-        //需要构建前置节点
-        ListNode preHead= new ListNode(-1);
-        preHead.next=head;
-        ListNode l=preHead;
-        ListNode r=preHead;
-
-        for(int i=0;i<n;i++) r=r.next;
-        while(r.next!=null)
-        {
-            l=l.next;
-            r=r.next;
-        }
-        l.next=l.next.next;
-
-        return preHead.next;
-
+       ListNode dummyHead=new ListNode(-1);
+       dummyHead.next=head;
+       ListNode pre=dummyHead;
+       ListNode cur=dummyHead;
+       for(int i=0;i<n;i++) cur=cur.next;
+       while(cur.next!=null){
+        pre=pre.next;
+        cur=cur.next;
+       }
+       pre.next=pre.next.next;
+       return dummyHead.next;
     }
 }
 // @lc code=end

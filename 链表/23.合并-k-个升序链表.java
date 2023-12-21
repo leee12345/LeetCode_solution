@@ -74,33 +74,25 @@
 class Solution {
     //顺序合并
     public ListNode mergeKLists(ListNode[] lists) {
-        ListNode ans=null;
-        for(int i=0;i<lists.length;i++)
-        {
-            ans=mergeTwoLists(ans, lists[i]);
-        }
-        return ans;
-
+       ListNode ans=null;
+       for(int i=0;i<lists.length;i++){
+        ans=mergeTwoList(ans, lists[i]);
+       }
+       return ans;
     }
-    public ListNode mergeTwoLists(ListNode list1,ListNode list2) {
+    private ListNode mergeTwoList(ListNode list1,ListNode list2){
         if(list1==null){
             return list2;
-        }else if(list2==null)
-        {
+        }else if(list2==null){
+            return list1;
+        }else if(list1.val<list2.val){
+            list1.next=mergeTwoList(list1.next,list2);
             return list1;
         }else{
-            if(list1.val<=list2.val)
-            {
-                list1.next=mergeTwoLists(list1.next,list2);
-                return list1;
-            }else{
-                list2.next=mergeTwoLists(list1, list2.next);
-                return list2;
-            }
+            list2.next=mergeTwoList(list1,list2.next);
+            return list2;
         }
-
     }
-    //
 }
 // @lc code=end
 
