@@ -67,37 +67,32 @@
  * }
  */
 class Solution {
-    //链表分为 已翻转 未翻转 待翻转 3部分
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode dummyHead= new ListNode(0);
+        ListNode dummyHead= new ListNode(-1);
         dummyHead.next=head;
         ListNode pre=dummyHead;
         ListNode end=dummyHead;
-        while(end.next!=null)
-        {
-            for(int i=0;i<k&&end!=null;i++)
-            {   
+        while(end.next!=null){
+            for(int i=0;i<k&&end!=null;i++){
                 end=end.next;
             }
             if(end==null) break;
-            ListNode start=pre.next;
             ListNode nex=end.next;
+            ListNode start=pre.next;
             end.next=null;
             pre.next=reverse(start);
+            //反转后start在已反转列表的最后
             start.next=nex;
-
             pre=start;
-            end=pre;
-
+            end=start;
         }
         return dummyHead.next;
+
     }
-    public ListNode reverse(ListNode head)
-    {
+    private ListNode reverse(ListNode head){
         ListNode pre=null;
         ListNode cur=head;
-        while(cur!=null)
-        {
+        while(cur!=null){
             ListNode nex=cur.next;
             cur.next=pre;
             pre=cur;

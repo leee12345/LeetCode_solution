@@ -59,12 +59,11 @@ class Solution {
         if(head==null||head.next==null) return head;
         ListNode pre=head;
         ListNode cur=head.next;
-        while(cur!=null)
-        {
-            if(cur.val>pre.val){
-                pre=pre.next;
-            }else if(cur.val==pre.val){
+        while(cur!=null){
+            if(pre.val==cur.val){
                 pre.next=cur.next;
+            }else{
+                pre=pre.next;
             }
             cur=cur.next;
         }
