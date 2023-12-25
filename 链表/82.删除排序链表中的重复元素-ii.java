@@ -57,17 +57,13 @@
 class Solution {
     //快慢指针
     public ListNode deleteDuplicates(ListNode head) {
-        if(head==null||head.next==null) return head;
         ListNode dummyHead= new ListNode(-1);
         dummyHead.next=head;
         ListNode cur=dummyHead;
-        while(cur.next!=null&&cur.next.next!=null)
-        {
-            if(cur.next.val==cur.next.next.val)
-            {
+        while(cur.next!=null&&cur.next.next!=null){
+            if(cur.next.val==cur.next.next.val){
                 int val=cur.next.val;
-                while(cur.next!=null&&cur.next.val==val)
-                {
+                while(cur.next!=null&&cur.next.val==val){
                     cur.next=cur.next.next;
                 }
             }else{

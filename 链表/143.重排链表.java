@@ -70,84 +70,82 @@
  * 找链表中点+链表后半翻转 +前后半合并
  * 时间 O(N)
  * 空间 O(N)
- * 
+*/
+
 class Solution {
+
     private ListNode reverse(ListNode head){
-        //迭代反转链表
         ListNode pre=null;
         ListNode cur=head;
-        while(cur!=null)
-        {
+        while(cur!=null){
             ListNode nex=cur.next;
             cur.next=pre;
             pre=cur;
             cur=nex;
         }
         return pre;
+
     }
-    private ListNode findMid(ListNode head){ 
-        //快慢指针找中点
-        ListNode s=head;
-        ListNode f=head;
-        if(head==null) return null;
-        while(f.next!=null&&f.next.next!=null)
-        {
-            //mid为中间偏前的点
-            s=s.next;
-            f=f.next.next;
+    private ListNode findMid(ListNode head)
+    {
+        ListNode dummyHead=new ListNode(-1);
+        dummyHead.next=head;
+        ListNode fast=head;
+        ListNode slow=head;
+        while(fast.next!=null&&fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
         }
-        return s;
+        return slow;
     }
     private void mergeList(ListNode l1,ListNode l2){
-        ListNode l1nex;
-        ListNode l2nex;
-        while(l1!=null&&l2!=null)
-        {
-            l1nex=l1.next;
-            l2nex=l2.next;
+        ListNode nex1=l1;
+        ListNode nex2=l2;
+        while(l1!=null&&l2!=null){
+            nex1=l1.next;
+            nex2=l2.next;
             
             l1.next=l2;
-            l2.next=l1nex;
-            l1=l1nex;
-            l2=l2nex;
+            l1=nex1;
+            l2.next=l1;
+            l2=nex2;
         }
     }
     public void reorderList(ListNode head) {
         if(head==null) return;
         ListNode mid=findMid(head);
-        ListNode l1=head;
-        ListNode l2=mid.next;
+        ListNode l=head;
+        ListNode r=mid.next;
         mid.next=null;
-        l2=reverse(l2);
-        mergeList(l1,l2);
+        ListNode r_new=reverse(r);
+        mergeList(l, r_new);
     }
-}
- */
 
- /***
+}
+
+
+/***
   * 数组存链表元素
-  */
 class Solution {
     public void reorderList(ListNode head) {
         if(head==null) return;
-        List<ListNode> list= new ArrayList<ListNode>();
-        ListNode node=head;
-        while(node!=null)
-        {
-            list.add(node);
-            node=node.next;
+        List<ListNode>array= new ArrayList<ListNode>();
+        ListNode p=head;
+        while(p!=null){
+            array.add(p);
+            p=p.next;
         }
-        int i=0,j=list.size()-1;
-        while(i<j)
-        {
-            list.get(i).next=list.get(j);
+        int i=0,j=array.size()-1;
+        while(i<j){
+            array.get(i).next=array.get(j);
             i++;
             if(i==j) break;
-            list.get(j).next=list.get(i);
+            array.get(j).next=array.get(i);
             j--;
         }
-        list.get(i).next=null;
+        array.get(i).next=null;
     }
 }
+*/
 // @lc code=end
 

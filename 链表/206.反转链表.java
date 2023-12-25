@@ -74,28 +74,29 @@ class Solution {
     public ListNode reverseList(ListNode head) {
         ListNode pre=null;
         ListNode cur=head;
-        while(cur!=null)
-        {
-            ListNode nex=cur.next;
-            cur.next=pre;
-            pre=cur;
-            cur=nex;
+        while(cur!=null){
+          ListNode nex=cur.next;
+          cur.next=pre;
+          pre=cur;
+          cur=nex;
         }
         return pre;
     }
 }
   */
+
 /***
   * 递归
-*/
+  */
 class Solution {
     public ListNode reverseList(ListNode head) {
        if(head==null||head.next==null) return head;
-       ListNode newHead=reverseList(head.next);
-       head.next.next=head;//head的下一个节点指针指向head
-       head.next=null;
-       return newHead;
+      ListNode last= reverseList(head.next);
+      head.next.next=head;//head的下一个指向head
+      head.next=null;
+      return last;
     }
 }
+
 // @lc code=end
 

@@ -119,27 +119,24 @@ public class Solution {
 public class Solution {
     public ListNode detectCycle(ListNode head) {
         if(head==null) return null;
-        ListNode fast=head;
         ListNode slow=head;
-        while(fast!=null)
-        {
+        ListNode fast=head;
+        while(fast!=null){
             slow=slow.next;
             if(fast.next!=null){
                 fast=fast.next.next;
             }else{
-                return null;
+                return null;//不是环
             }
-
-            if(fast==slow)
+            if(fast==slow)//是环
             {
+                //找环起始点
                 ListNode p=head;
-                while(p!=slow)
-                {
+                while(p!=fast){
                     p=p.next;
-                    slow=slow.next;
+                    fast=fast.next;
                 }
-                return p;
-                
+                if(p==fast) return p;
             }
         }
         return null;

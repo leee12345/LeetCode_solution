@@ -61,37 +61,33 @@
  */
 /*
  * 分割-反转-拼接
- * 
+*/
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        ListNode dummyHead= new ListNode(0);
-        dummyHead.next=head;
-        ListNode pre=dummyHead;
-        ListNode end=dummyHead;
-        for(int i=0;i<left-1;i++)
-        {
-            pre=pre.next;
-        }
-        for(int i=0;i<right;i++)
-        {
-            end=end.next;
-        }
-        ListNode start=pre.next;
-        ListNode nex=end.next;
-        pre.next=null;
-        end.next=null;
-        
-        pre.next=swap(start);
-        start.next=nex;
-        return dummyHead.next;
+    ListNode dummyHead= new ListNode(-1);
+    dummyHead.next=head;
+    ListNode pre=dummyHead;
+    for(int i=1;i<left;i++){
+        pre=pre.next;
     }
-    private ListNode swap(ListNode head)
-    {
+    ListNode start=pre.next;
+    ListNode end=start;
+    for(int i=0;i<right-left;i++){
+        end=end.next;
+    }
+    ListNode nex=end.next;
+    pre.next=null;
+    end.next=null;
+    ListNode newHead=reverse(start);
+    pre.next=newHead;
+    start.next=nex;//start反转后为中间反转部分结尾
+    return dummyHead.next;
+    }
+    private ListNode reverse(ListNode head){
         if(head==null||head.next==null) return head;
         ListNode pre=null;
         ListNode cur=head;
-        while(cur!=null)
-        {
+        while(cur!=null){
             ListNode nex=cur.next;
             cur.next=pre;
             pre=cur;
@@ -99,32 +95,33 @@ class Solution {
         }
         return pre;
     }
+   
 }
- */
 
-import java.util.List;
 
 /**
  * 一次遍历 穿针引线
- */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-       ListNode dummyHead= new ListNode(-1);
-       dummyHead.next=head;
-       ListNode pre=dummyHead;
-       for(int i=0;i<left-1;i++) pre=pre.next;
-       ListNode cur=pre.next;
-       ListNode nex;
-       for(int i=0;i<right-left;i++)
-       {
-            nex=cur.next;//nex向后移
+        ListNode dummyHead= new ListNode(-1);
+        dummyHead.next=head;
+        ListNode pre=dummyHead;
+        for(int i=1;i<left;i++){
+            pre=pre.next;
+        }
+        ListNode cur=pre.next;
+        ListNode nex;
+        for(int i=0;i<right-left;i++){// 1.2.3.4.5变为1.3.2.4.5变为1.4.3.2.5
+            nex=cur.next;
             cur.next=nex.next;
             nex.next=pre.next;
             pre.next=nex;
-       }
-       return dummyHead.next;
+            //cur不变为2 pre不变为1
+        }
+        return dummyHead.next;
 
     }
     }
+ */
 // @lc code=end
 

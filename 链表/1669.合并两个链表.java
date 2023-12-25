@@ -68,19 +68,22 @@
 class Solution {
     public ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {
         ListNode pre=list1;
-        //定位pre和end
-        for(int i=0;i<a-1;i++) pre=pre.next;
+        for(int i=0;i<a-1;i++)
+        {
+            pre=pre.next;
+        }
         ListNode nex=pre;
-        for(int i=0;i<b-a+2;i++) nex=nex.next;
-
-        ListNode end=list2;
-        while(end.next!=null) end=end.next;
-
+        for(int i=0;i<b-a+2;i++)
+        {
+            nex=nex.next;
+        }
         pre.next=list2;
+        ListNode end=list2;
+        while(end.next!=null){
+            end=end.next;
+        }
         end.next=nex;
-
         return list1;
-
     }
 }
 // @lc code=end

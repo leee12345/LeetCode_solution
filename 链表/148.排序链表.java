@@ -69,33 +69,30 @@
  */
 /**
  * 插入排序
- * 
 class Solution {
     //插入排序
     public ListNode sortList(ListNode head) {
-       if(head==null) return null;
-       ListNode dummyHead= new ListNode(-1);
-       dummyHead.next=head;
-       ListNode sortlast=head;
-       ListNode cur=head.next;
-       while(cur!=null)
-       {
-            if(cur.val>=sortlast.val){
-                sortlast.next=cur;
-                sortlast=cur;
+        if(head==null) return null;
+        ListNode dummyHead= new ListNode(-1);
+        dummyHead.next=head;
+        ListNode lastsort=head;
+        ListNode cur=head.next;
+        while(cur!=null){
+            if(cur.val>=lastsort.val){
+                lastsort.next=cur;
+                lastsort=cur;
             }else{
-                //从前向后遍历找位置
                 ListNode pre=dummyHead;
                 while(pre.next.val<=cur.val){
                     pre=pre.next;
                 }
-                sortlast.next=cur.next;
+                lastsort.next=cur.next;
                 cur.next=pre.next;
                 pre.next=cur;
             }
-            cur=sortlast.next;
-       }
-       return dummyHead.next;
+            cur=lastsort.next;
+        }
+        return dummyHead.next;
     }
 }
  */
@@ -107,44 +104,42 @@ class Solution {
 class Solution {
     //归并排序
     public ListNode sortList(ListNode head) {
-        return mergeSort(head);
+        return sort(head);
     }
-    public ListNode mergeSort(ListNode head){
+    private ListNode sort(ListNode head){
         if(head==null||head.next==null) return head;
-        ListNode slow=head;
         ListNode fast=head;
+        ListNode slow=head;
         while(fast.next!=null&&fast.next.next!=null){
             slow=slow.next;
             fast=fast.next.next;
         }
+        ListNode l=head;
         ListNode r=slow.next;
         slow.next=null;
-        r=mergeSort(r);
-        ListNode l=head;
-        l=mergeSort(l);
+        r=sort(r);
+        l=sort(l);
         return mergeList(l,r);
     }
-    private ListNode mergeList(ListNode l,ListNode r){
-        ListNode dummyHead= new ListNode(-1);
-        ListNode pre=dummyHead;
-        while(l!=null&&r!=null){
-            if(l.val<=r.val){
-                pre.next=l;
-                l=l.next;
+    private ListNode mergeList(ListNode l1,ListNode l2){
+       ListNode dummyHead= new ListNode(-1);
+       ListNode pre=dummyHead;
+       while(l1!=null&&l2!=null){
+            if(l1.val<=l2.val){
+                pre.next=l1;
+                l1=l1.next;
             }else{
-                pre.next=r;
-                r=r.next;
+                pre.next=l2;
+                l2=l2.next;
             }
             pre=pre.next;
-        }
-        pre.next=l==null?r:l;
-        return dummyHead.next;
-
+       }
+       pre.next=l1==null?l2:l1;
+       return dummyHead.next;
     }
-    
 
-    
 
 }
+    
 // @lc code=end
 

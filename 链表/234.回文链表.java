@@ -135,7 +135,7 @@ class Solution {
 
 class Solution {
     private ListNode frontPointer;
-
+    
     private boolean Check(ListNode cur){
         if(cur!=null){
             if(!Check(cur.next)){
@@ -148,6 +148,7 @@ class Solution {
         }
         return true;
     }
+
     public boolean isPalindrome(ListNode head){
         frontPointer=head;
         return Check(head);
