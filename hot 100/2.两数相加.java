@@ -89,9 +89,6 @@ class Solution {
         }
         cur.next=null;
         return dummyHead.next;
-        
-        
-
     }
 }
 // @lc code=end

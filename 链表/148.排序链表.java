@@ -67,79 +67,89 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
 /**
  * 插入排序
+ * 
 class Solution {
     //插入排序
     public ListNode sortList(ListNode head) {
         if(head==null) return null;
         ListNode dummyHead= new ListNode(-1);
         dummyHead.next=head;
-        ListNode lastsort=head;
+        ListNode lastsorted=head;
         ListNode cur=head.next;
         while(cur!=null){
-            if(cur.val>=lastsort.val){
-                lastsort.next=cur;
-                lastsort=cur;
-            }else{
+            if(lastsorted.val<=cur.val){//插入lastsort后 lastsort移动
+                lastsorted.next=cur;
+                lastsorted=cur;
+            }else{//插入lastsort前 lastsort不动
                 ListNode pre=dummyHead;
                 while(pre.next.val<=cur.val){
                     pre=pre.next;
                 }
-                lastsort.next=cur.next;
+                lastsorted.next=cur.next;
                 cur.next=pre.next;
                 pre.next=cur;
             }
-            cur=lastsort.next;
+            cur=lastsorted.next;
         }
         return dummyHead.next;
     }
 }
- */
+*/
+
 
  /***
   * 归并排序：(自顶向下)
   * 找到中点（快慢指针法则） 分别排序 有序链表合并
   */
+
 class Solution {
     //归并排序
     public ListNode sortList(ListNode head) {
         return sort(head);
+
     }
-    private ListNode sort(ListNode head){
+    private static ListNode sort(ListNode head){
         if(head==null||head.next==null) return head;
+        ListNode mid=findMid(head);
+        ListNode l=head;
+        ListNode r=mid.next;
+        mid.next=null;
+        l=sort(l);
+        r=sort(r);
+        return mergeList(l,r);
+    }
+
+    private static ListNode findMid(ListNode head){
         ListNode fast=head;
         ListNode slow=head;
         while(fast.next!=null&&fast.next.next!=null){
             slow=slow.next;
             fast=fast.next.next;
         }
-        ListNode l=head;
-        ListNode r=slow.next;
-        slow.next=null;
-        r=sort(r);
-        l=sort(l);
-        return mergeList(l,r);
+        return slow;
     }
-    private ListNode mergeList(ListNode l1,ListNode l2){
+    private static ListNode mergeList(ListNode l1,ListNode l2){
        ListNode dummyHead= new ListNode(-1);
-       ListNode pre=dummyHead;
+       ListNode cur=dummyHead;
        while(l1!=null&&l2!=null){
             if(l1.val<=l2.val){
-                pre.next=l1;
+                cur.next=l1;
                 l1=l1.next;
-            }else{
-                pre.next=l2;
+            }
+            else{
+                cur.next=l2;
                 l2=l2.next;
             }
-            pre=pre.next;
+        cur=cur.next;
        }
-       pre.next=l1==null?l2:l1;
+       cur.next=l1==null?l2:l1;
        return dummyHead.next;
     }
-
-
 }
+
     
 // @lc code=end
 
