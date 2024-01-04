@@ -71,6 +71,9 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+/**
+ * 顺序合并
+
 class Solution {
     //顺序合并
     public ListNode mergeKLists(ListNode[] lists) {
@@ -95,6 +98,83 @@ class Solution {
         }
     }
 
+}
+**/
+
+/***
+ * 分治合并
+
+class Solution {
+    //分治合并 两两合并 对合并后的链表再进行合并
+    public ListNode mergeKLists(ListNode[] lists) {
+        return merge(lists,0,lists.length-1);
+    }
+
+    public ListNode merge(ListNode[] lists,int l,int r){
+        if(l==r){
+            return lists[l];
+        }
+        if(l>r){
+            return null;
+        }
+        int mid=(l+r)/2;
+        return mergeTwoList(merge(lists,l,mid),merge(lists,mid+1,r));
+    }
+    private ListNode mergeTwoList(ListNode l,ListNode r){
+        if(l==null){
+            return r;
+        }else if(r==null){
+            return l;
+        }else if(l.val<r.val){
+            l.next=mergeTwoList(l.next,r);
+            return l;
+        }else{
+            r.next=mergeTwoList(l,r.next);
+            return r;
+        }
+    } 
+}
+*/
+
+class Solution {
+    //优先队列合并
+    //维护每个链表中没有被合并的元素的最前面一个
+    //PriorityQueue： 始终给返回最高优先级
+    //定义 Status的 compareTo接口
+    class Status implements Comparable<Status>{
+        int val;
+        ListNode ptr;
+
+        Status(int val,ListNode ptr){
+            this.val=val;
+            this.ptr=ptr;
+        }
+
+        public int compareTo(Status status2){
+            return this.val-status2.val;
+        }
+    }
+    PriorityQueue<Status> queue = new PriorityQueue<Status>();
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        for(ListNode node:lists){
+            if(node!=null){
+                queue.offer(new Status(node.val,node));
+            }
+        }
+
+        ListNode head=new ListNode(0);
+        ListNode tail=head;
+        while(!queue.isEmpty()){
+            Status f= queue.poll();//返回并删除队列的头部元素
+            tail.next=f.ptr;
+            tail=tail.next;
+            if(f.ptr.next!=null){
+                queue.offer(new Status(f.ptr.next.val,f.ptr.next));//插入队列尾部
+            }
+        }
+        return head.next;
+    }
 }
 // @lc code=end
 

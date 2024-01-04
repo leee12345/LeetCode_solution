@@ -104,7 +104,9 @@ class LRUCache extends LinkedHashMap<Integer,Integer>{
     }
 }
  */
-class LRUCache {
+import java.util.*;
+
+class LRUCache{
     class DLinkedNode{
         int key;
         int value;
@@ -117,8 +119,8 @@ class LRUCache {
     private int size;
     private int capacity;
     private DLinkedNode head,tail;
-    
-    public LRUCache(int capacity) {
+
+    public LRUCache(int capacity){
         this.size=0;
         this.capacity=capacity;
         head= new DLinkedNode();
@@ -126,20 +128,20 @@ class LRUCache {
         head.next=tail;
         tail.prev=head;
     }
-    
-    public int get(int key) {
-        DLinkedNode node =cache.get(key);
+
+    public int get(int key){
+        DLinkedNode node=cache.get(key);
         if(node==null){
             return -1;
         }
         moveToHead(node);
         return node.value;
     }
-    
-    public void put(int key, int value) {
-        DLinkedNode node= cache.get(key);
-        if(node==null){
-            DLinkedNode newNode= new DLinkedNode(key,value);
+
+    public void put(int key, int value){
+        DLinkedNode node=cache.get(key);//查看缓存中是否存在该值
+        if(node==null){// 缓存中不存在，加入首部
+            DLinkedNode newNode=new DLinkedNode(key,value);
             cache.put(key,newNode);
             addToHead(newNode);
             ++size;
@@ -160,7 +162,7 @@ class LRUCache {
         head.next.prev=node;
         head.next=node;
     }
-
+    
     private void removeNode(DLinkedNode node){
         node.prev.next=node.next;
         node.next.prev=node.prev;
@@ -172,12 +174,12 @@ class LRUCache {
     }
 
     private DLinkedNode removeTail(){
-        DLinkedNode res=tail.prev;
+        DLinkedNode res= tail.prev;
         removeNode(res);
         return res;
     }
-
 }
+
 
 /**
  * Your LRUCache object will be instantiated and called as such:

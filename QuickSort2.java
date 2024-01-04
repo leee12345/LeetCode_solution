@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class QuickSort{
+public class QuickSort2{
 
     public static void quicksort(int[] array,int left, int right){
         if(left>=right) return;
@@ -21,14 +21,16 @@ public class QuickSort{
             }
         }
         array[i]=index;
-        quicksort(array, left, i-1);
-        quicksort(array, i+1, right);
+        quicksort(array,left,i-1);
+        quicksort(array,i+1,right);
+
     }
-    
+
     public static void quickSort(int[] array){
         if(array==null||array.length==0) return;
-        quicksort(array, 0, array.length-1);
+        quicksort(array,0,array.length-1);
     }
+    
 
 
 
