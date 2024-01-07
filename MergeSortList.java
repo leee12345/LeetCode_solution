@@ -8,6 +8,7 @@ class ListNode{
     ListNode(int val,ListNode next){ this.val=val;this.next=next;}
 }
 
+
 public class MergeSortList {
 
     public static void main(String [] args){
@@ -17,20 +18,15 @@ public class MergeSortList {
         printList(newHead);
         return;
     }
-
-    private static ListNode mergeSort(ListNode head)
-    {
+    private static ListNode findMid(ListNode head){
         if(head==null||head.next==null) return head;
-
-        ListNode mid=findMid(head);
-        ListNode r=mid.next;
-        mid.next=null;
-        ListNode r_new=mergeSort(r);
-        ListNode l_new=mergeSort(head);
-        return merge(l_new,r_new);
+        ListNode fast=head,slow=head;
+        while(fast.next!=null&&fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
     }
-
-
     private static ListNode merge(ListNode l1,ListNode l2){
         ListNode dummyHead= new ListNode(-1);
         ListNode cur=dummyHead;
@@ -48,16 +44,17 @@ public class MergeSortList {
         return dummyHead.next;
     }
 
-    private static ListNode findMid(ListNode head){
-        if(head==null) return null;
-        ListNode fast=head;
-        ListNode slow=head;
-        while(fast.next!=null&&fast.next.next!=null){
-            slow=slow.next;
-            fast=fast.next.next;
-        }
-        return slow;
+    private static ListNode mergeSort(ListNode head){
+        if(head==null||head.next==null) return head;
+        ListNode mid=findMid(head);
+        ListNode r=mid.next;
+        mid.next=null;
+        ListNode l_new=mergeSort(head);
+        ListNode r_new=mergeSort(r);
+        ListNode newhead=merge(l_new, r_new);
+        return newhead;
     }
+
 
     private static void printList(ListNode head){
         ListNode cur=head;
