@@ -66,14 +66,10 @@
  * }
  */
 
-import java.util.Queue;
 
-import javax.swing.tree.TreeNode;
 
 /***
  * 广度优先搜索
- */
-
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res= new ArrayList<List<Integer>>();
@@ -101,5 +97,30 @@ class Solution {
 
     }
 }
+*/
+
+/***
+ * 递归方法
+ **/
+
+class Solution {
+    public List<List<Integer>> resList= new ArrayList<List<Integer>>();
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        checkFun01(root, 0);
+        return resList;
+    }
+    public void checkFun01(TreeNode node,Integer deep){
+        if(node==null) return;
+        deep++;
+        if(resList.size()<deep){
+            List<Integer> item= new ArrayList<Integer>();
+            resList.add(item);
+        }
+        resList.get(deep-1).add(node.val);
+        checkFun01(node.left, deep);
+        checkFun01(node.right, deep);
+    }
+}
+
 // @lc code=end
 
