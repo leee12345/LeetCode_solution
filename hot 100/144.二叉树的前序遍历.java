@@ -109,7 +109,7 @@ class Solution {
  * 迭代
  * 时间 O（N）N节点数数
  * 空间 O（N）递归栈开销
- */
+ * 
 //遍历顺序 根左右 入栈顺序 根右左
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -128,6 +128,33 @@ class Solution {
             if(node.left!=null){
                 stack.push(node.left);
             }
+        }
+        return list;
+    }
+   
+}
+ */
+
+
+/***
+ * 迭代
+ * 时间 O（N）N节点数数
+ * 空间 O（N）递归栈开销
+ */
+
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        Deque<TreeNode>stack = new LinkedList<TreeNode>();
+        List<Integer> list= new ArrayList<Integer>();
+
+        while(root!=null||!stack.isEmpty()){
+            while(root!=null){
+                stack.push(root);
+                list.add(root.val);
+                root=root.left;
+            }
+            root=stack.pop();
+            root=root.right;
         }
         return list;
     }
