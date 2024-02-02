@@ -45,10 +45,11 @@
  */
 
 // @lc code=start
+//HashSet 去重复
 import java.util.*;
 class Solution {
     public int longestConsecutive(int[] nums) {
-        Set<Integer> set= new HashSet<Integer>();
+        Set<Integer> set = new HashSet<Integer>();
         for(int num:nums){
             set.add(num);
         }
@@ -61,10 +62,11 @@ class Solution {
                     cur+=1;
                     curlen+=1;
                 }
-                res=Math.max(res,curlen);
+                res= Math.max(res,curlen);
             }
         }
         return res;
+
     }
 }
 // @lc code=end
