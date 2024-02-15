@@ -105,12 +105,15 @@ class Solution {
 }
  */
 
+import java.util.Deque;
+
+import javax.swing.tree.TreeNode;
 
 /**
  * 迭代方法
  * 时间 O(n)
  * 空间 O(n)
- */
+ * 
  //前序遍历顺序：中 左 右 入栈顺序 中 右 左
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -132,6 +135,24 @@ class Solution {
 
     }
 
+}
+ */
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+         Deque<TreeNode>stack = new LinkedList<TreeNode>();
+         List<Integer> res= new ArrayList<Integer>();
+         while(root!=null||!stack.isEmpty()){
+            while(root!=null){
+                stack.push(root);
+                res.add(root.val);
+                root=root.left;
+            }
+            root=stack.pop();
+            root=root.right;
+         }
+         return res;
+
+    }
 
 }
 
