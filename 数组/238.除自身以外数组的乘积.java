@@ -53,13 +53,56 @@
 
 // @lc code=start
 /**
+ *  问题：输入的数组中可能有0 不能全部相乘再除的方式计算
+ *  左右乘积列表：索引左侧所有数字的乘积和右侧所有数字的乘积
  *  时间 O(n)
  *  空间 O(n)
+ * 
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n=nums.length;
+        int [] L= new int[n];
+        int [] R = new int [n];
+        
+        int [] res= new int [n];
+        L[0]=1;
+        for(int i=1;i<n;i++){
+            L[i]=nums[i-1]*L[i-1];
+        }
+        R[n-1]=1;
+        for(int i=n-2;i>=0;i--){
+            R[i]=nums[i+1]*R[i+1];
+        }
+        for(int i=0;i<n;i++){
+            res[i]=L[i]*R[i];
+        }
+        return res;
+    }
+}
+ */
+
+/**
+ *  问题：输入的数组中可能有0 不能全部相乘再除的方式计算
+ *  左右乘积列表：索引左侧所有数字的乘积和右侧所有数字的乘积
+ *  空间优化
+ *  时间 O(n)
+ *  空间 O(1)
  * 
  */
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-
+        int n=nums.length;
+        int [] res= new int [n];
+        res[0]=1;
+        for(int i=1;i<n;i++){
+            res[i]=nums[i-1]*res[i-1];
+        }
+        int R=1;
+        for(int i=n-1;i>=0;i--){
+            res[i]=res[i]*R;
+            R*=nums[i];
+        }
+        return res;
     }
 }
 // @lc code=end
