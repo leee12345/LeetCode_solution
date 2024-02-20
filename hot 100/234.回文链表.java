@@ -57,9 +57,46 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+/**
+ * 找中点分割
+ * 翻转
+ * 判断
+ */
 class Solution {
     public boolean isPalindrome(ListNode head) {
+        if(head.next==null) return true;
+        ListNode mid=findMid(head);
+        ListNode l=head;
+        ListNode r=reverse(mid.next);
+        mid.next=null;
+        while(l!=null&&r!=null){
+            if(l.val!=r.val) return false;
+            l=l.next;
+            r=r.next;
+        }
+        return true;
+    }
+    
+    public static ListNode findMid(ListNode head){
+        ListNode fast=head;
+        ListNode slow=head;
+        while(fast.next!=null&&fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
 
+    public static ListNode reverse(ListNode head){
+        ListNode pre=null;
+        ListNode cur=head;
+        while(cur!=null){
+            ListNode next=cur.next;
+            cur.next=pre;
+            pre=cur;
+            cur=next;
+        }
+        return pre;
     }
 }
 // @lc code=end
