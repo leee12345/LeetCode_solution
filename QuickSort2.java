@@ -3,7 +3,7 @@ import java.util.*;
 public class QuickSort2{
 
  
-    public static void quicksort(int[]array, int left,int right){
+    public static void quicksort(int[] array,int left,int right){
         if(left>=right) return;
         int i=left,j=right;
         int index=array[i];
@@ -20,10 +20,10 @@ public class QuickSort2{
             if(i<j){
                 array[j--]=array[i];
             }
+            array[i]=index;
+            quicksort(array, left, i-1);
+            quicksort(array, i+1, right);
         }
-        array[i]=index;
-        quicksort(array, left, i);
-        quicksort(array, i+1, right);
     }
     public static void quickSort(int[] array){
         if(array==null||array.length==0) return;

@@ -86,7 +86,6 @@ class Solution {
 */
 
 
-
 /***
  * 广度优先搜索
  * 时间  O(N)
@@ -95,20 +94,26 @@ class Solution {
 class Solution {
     public int maxDepth(TreeNode root) {
         if(root==null) return 0;
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(root);
+        Queue<TreeNode>queue = new LinkedList<TreeNode>();
         int depth=0;
+        queue.offer(root);
         while(!queue.isEmpty()){
-            int len = queue.size();
+            int len=queue.size();
             while(len>0){
-                TreeNode node = queue.poll();
-                if(node.left!=null) queue.offer(node.left);
-                if(node.right!=null) queue.offer(node.right);
+                TreeNode node=queue.poll();
+                if(node.left!=null){
+                    queue.offer(node.left);
+                }
+                if(node.right!=null){
+                    queue.offer(node.right);
+                }
                 len--;
             }
             depth++;
+
         }
         return depth;
+
     }
 }
 // @lc code=end

@@ -64,6 +64,13 @@
  * }
  */
 
+ /**
+  * 所有结点里面 路径最长
+    深度=节点数
+    直径=边数
+    路径深度=左子树深度+右子树深度+1
+    直径=最大路径深度-1
+  */
 class Solution {
     int ans;
     public int diameterOfBinaryTree(TreeNode root) {
